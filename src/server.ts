@@ -1,5 +1,35 @@
-import app from "./app";
+import { Server } from 'http';
+import app from './app';
+import config from './app/config';
+import mongoose from 'mongoose';
 
-app.listen(5000,()=>{
-  console.log('server running on port 5000');
+
+
+let server:Server;
+
+async function main() {
+  try{
+    await mongoose.connect(config.db_url as string);
+    server=app.listen(config.port,()=>{
+      console.log(`server is up and running of port ${config.port}`);
+    })
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+main()
+
+process.on('unhandledRejection',()=>{
+  console.log('unhandled rejection found,shutting down the server📉');
+  if(server){
+    server.close(()=>{
+      process.exit(1)
+    })
+  }
+  process.exit(1)
+})
+process.on('uncaughtException',()=>{
+  console.log('uncaughtException found,shutting down the server📉');
+  process.exit(1)
 })
