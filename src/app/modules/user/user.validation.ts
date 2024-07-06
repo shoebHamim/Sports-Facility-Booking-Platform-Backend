@@ -9,6 +9,12 @@ const createUser = z.object({
   address: z.string({required_error:"address is required"}).min(8, 'Address length must be minimum of 8 characters'),
 });
 
+const loginUser=z.object({
+  email: z.string({required_error:"email is required"}).email('Invalid email format'),
+  password: z.string({required_error:"password is required"}).min(6, 'Password length must be at least 6 character long')
+})
+
 export const userValidationSchema={
-  createUser
+  createUser,
+  loginUser
 }

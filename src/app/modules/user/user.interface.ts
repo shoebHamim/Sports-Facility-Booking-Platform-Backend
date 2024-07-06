@@ -1,3 +1,4 @@
+import { Model } from "mongoose";
 
 export type TUser={
   name:string;
@@ -8,3 +9,6 @@ export type TUser={
   address:string;
 }
 
+export interface UserModel extends Model<TUser>{
+  hasPasswordMatched(plainPassword:string,hashedPassword:string):Promise<boolean>
+}
