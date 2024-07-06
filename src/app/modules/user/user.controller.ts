@@ -7,6 +7,5 @@ import { userServices } from "./user.service";
 
 export const userControllers={
 
-
   
 }
