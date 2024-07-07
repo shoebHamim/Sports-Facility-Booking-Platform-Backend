@@ -19,13 +19,14 @@ const loginUser = catchAsync(async (req, res) => {
   if(!data){
     sendResponse(res,{
       success:false,
-      message:"No Data Found",
+      message:"No user Found",
       statusCode:404,
       data:[]
     })
   }else{
     sendResponse(res, {
-      data: data,
+      data: data.withoutPassword,
+      token:data.accessToken,
       message: "User logged in successfully",
       statusCode: 200,
       success: true,

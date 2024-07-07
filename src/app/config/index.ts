@@ -10,5 +10,6 @@ export default {
   salt_round:process.env.SALT_ROUND,
   facility_opening_time:process.env.FACILITY_OPENING_TIME,
   facility_closing_time:process.env.FACILITY_CLOSING_TIME,
+  jwt_access_secret:process.env.JWT_ACCESS_SECRET,
  
 };
