@@ -48,7 +48,7 @@ const getUsersBookingsFromDB = (user) => __awaiter(void 0, void 0, void 0, funct
     return allBookings;
 });
 const cancelBookingsInDB = (bookingId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield booking_model_1.default.findByIdAndUpdate(bookingId, { "isBooked": "canceled" }).populate('facility');
+    const result = yield booking_model_1.default.findByIdAndUpdate(bookingId, { "isBooked": "canceled" }, { new: true }).populate('facility');
     return result;
 });
 exports.bookingServices = {
