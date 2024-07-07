@@ -16,7 +16,7 @@ app.use((0, cors_1.default)());
 app.use('/api', index_route_1.default);
 // root path
 app.get('/', (req, res) => {
-    res.send('Hello! This is the root directory of Sports Facility Booking API ');
+    res.send('Hello Word! This is the root directory of Sports Facility Booking API');
 });
 app.all('/*', routeNotFoundHandler_1.routeNotFoundHandler);
 // middlewares

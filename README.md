@@ -2,7 +2,7 @@
 
 This project is the backend for a Sports Facility Booking System, designed to manage Users(admin,user),Facilities and Bookings.
 
-## Live URL- 
+## Live URL- https://sports-facility-booking-platform-backend-indol.vercel.app/
 
 ## Features
 
