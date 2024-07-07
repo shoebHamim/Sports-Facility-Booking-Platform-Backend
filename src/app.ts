@@ -16,7 +16,7 @@ app.use('/api',router)
 
 // root path
 app.get('/',(req,res)=>{
-  res.send('hello world!')
+  res.send('Hello! This is the root directory of Sports Facility Booking API ')
 })
 
 app.all('/*',routeNotFoundHandler)
