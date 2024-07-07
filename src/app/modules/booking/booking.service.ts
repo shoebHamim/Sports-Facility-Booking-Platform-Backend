@@ -5,7 +5,7 @@ import { TBooking } from "./booking.interface"
 import Booking from "./booking.model"
 import { calculateAvailableSlots } from "./bookings.utils";
 
-const createBookingIntoDB=async(bookingData:Partial<TBooking>)=>{
+const createBookingIntoDB=async(user:string,bookingData:Partial<TBooking>)=>{
   // find the facility
   const facility=await Facility.findById(bookingData.facility)
   if(!facility){
@@ -16,11 +16,9 @@ const createBookingIntoDB=async(bookingData:Partial<TBooking>)=>{
   // as the bookingPrice is in hour basis i am ceiling the value to a full hour; 
   const totalBookingTimeInHour=Math.ceil(totalBookingTimeInMS/(1000*60*60))
   const payableAmount=totalBookingTimeInHour*pricePerHour;
-  //todo you are gonna get the user id from token 
 
-  //todo update and return
   const finalBookingData={...bookingData,
-    "user":new mongoose.Types.ObjectId("66895d92448d933684b59a11"),
+    user,
     payableAmount,
     "isBooked":"confirmed",
   }
@@ -37,7 +35,7 @@ const findAllAvailableBookingsInDBForADay=async(queryDate:string)=>{
   return availableSlots
 }
 const getAllBookingsFromDB=async()=>{
-  const allBookings=await Booking.find({}).sort({startTime:1}).populate('user')
+  const allBookings=await Booking.find({}).sort({startTime:1}).populate(['user','facility'])
   return allBookings
 }
 const getUsersBookingsFromDB=async(user:string)=>{

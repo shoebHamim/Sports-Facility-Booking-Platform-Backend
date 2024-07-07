@@ -3,6 +3,7 @@ import { Application } from "express-serve-static-core";
 import cors from "cors"
 import router from './app/routes/index.route';
 import { globalErrorHandler } from './app/middlewares/globalErrorHandler';
+import { routeNotFoundHandler } from './app/middlewares/routeNotFoundHandler';
 
 
 const app:Application=express()
@@ -17,6 +18,8 @@ app.use('/api',router)
 app.get('/',(req,res)=>{
   res.send('hello world!')
 })
+
+app.all('/*',routeNotFoundHandler)
 
 // middlewares
 app.use(globalErrorHandler)

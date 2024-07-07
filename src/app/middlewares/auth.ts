@@ -10,7 +10,7 @@ export const auth=(whoHasAccess:string[])=>{
     let authenticatedUser: any;
     Jwt.verify(token as string,config.jwt_access_secret as string,(err,decoded)=>{
       if(err){
-        throw new AppError(httpStatus.UNAUTHORIZED,"You are not authorized");
+        throw new AppError(httpStatus.UNAUTHORIZED,"You are not authorized[No token Found]");
       }else{
         (req as any).authenticatedUser=decoded;
         authenticatedUser=decoded;
@@ -20,7 +20,7 @@ export const auth=(whoHasAccess:string[])=>{
     if (!whoHasAccess.includes(role)) {
       throw new AppError(
         httpStatus.FORBIDDEN,
-        `${role} is not authorized to access this!`
+        'You have no access to this route'
       );
     }
 

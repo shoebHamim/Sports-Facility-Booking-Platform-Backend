@@ -4,6 +4,7 @@ import { bookingServices } from "./booking.service";
 import { isBookingTimeAvailable, isDateFormatValid } from "./bookings.utils";
 
 const createBooking = catchAsync(async (req, res) => {
+  const user=(req as any).authenticatedUser.userId
   const bookingData = req.body;
   const newBookingTime = {
     startTime: bookingData.startTime,
@@ -27,7 +28,7 @@ const createBooking = catchAsync(async (req, res) => {
     });
   }
   // everything fine ... now make the  booking
-  const data = await bookingServices.createBookingIntoDB(bookingData);
+  const data = await bookingServices.createBookingIntoDB(user,bookingData);
   return sendResponse(res, {
     data: data,
     message: "Booking created successfully",
@@ -80,9 +81,10 @@ const getAllBookings=catchAsync(async(req,res)=>{
   });
 })
 const getUserBooking=catchAsync(async(req,res)=>{
-  // retrieve userid from token
-  const userID='12232';
-  const data= await bookingServices.getUsersBookingsFromDB(userID)
+  // retrieve userId from token
+  const user=(req as any).authenticatedUser.userId
+  console.log(user);
+  const data= await bookingServices.getUsersBookingsFromDB(user)
     if(!data.length){
     return sendResponse(res, {
       data: [],
