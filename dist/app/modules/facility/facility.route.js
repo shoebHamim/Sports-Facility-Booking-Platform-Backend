@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.facilityRoute = void 0;
+const auth_1 = require("./../../middlewares/auth");
+const express_1 = require("express");
+const facility_controller_1 = require("./facility.controller");
+const validateRequest_1 = require("../../middlewares/validateRequest");
+const facility_validation_1 = require("./facility.validation");
+const router = (0, express_1.Router)();
+router.post('/', (0, auth_1.auth)(['admin']), (0, validateRequest_1.validateRequest)(facility_validation_1.facilityValidationSchemas.createFacility), facility_controller_1.facilityControllers.createFacility);
+router.put('/:id', (0, auth_1.auth)(['admin']), (0, validateRequest_1.validateRequest)(facility_validation_1.facilityValidationSchemas.updateFacility), facility_controller_1.facilityControllers.updateFacility);
+router.delete('/:id', (0, auth_1.auth)(['admin']), facility_controller_1.facilityControllers.deleteFacility);
+router.get('/', facility_controller_1.facilityControllers.getAllFacility);
+exports.facilityRoute = router;
