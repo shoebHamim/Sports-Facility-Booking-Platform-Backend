@@ -43,7 +43,7 @@ const getUsersBookingsFromDB=async(user:string)=>{
   return allBookings
 }
 const cancelBookingsInDB=async(bookingId:string)=>{
-  const result=await Booking.findByIdAndUpdate(bookingId,{"isBooked":"canceled"}).populate('facility')
+  const result=await Booking.findByIdAndUpdate(bookingId,{"isBooked":"canceled"}).populate('facility',{new:true})
   return result
 }
 
