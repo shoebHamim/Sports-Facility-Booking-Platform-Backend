@@ -22,7 +22,7 @@ const createBooking = catchAsync(async (req, res) => {
       data: [],
       message:
         "Booking Time is unavailable. Please select another time or try another date",
-      statusCode: 200,
+      statusCode: 400,
       success: false,
     });
   }
@@ -42,7 +42,7 @@ const checkBookingAvailability = catchAsync(async (req, res) => {
   if (!queryDate) {
     const today = new Date();
     queryDate = today.toISOString().split("T")[0];
-  } else if (isDateFormatValid(queryDate as string)) {
+  } else if (!isDateFormatValid(queryDate as string)) {
     // checking if the date is in correct format
     return sendResponse(res, {
       message: "Invalid date format. Please use YYYY-MM-DD format.",
@@ -62,7 +62,65 @@ const checkBookingAvailability = catchAsync(async (req, res) => {
   });
 });
 
+const getAllBookings=catchAsync(async(req,res)=>{
+  const data= await bookingServices.getAllBookingsFromDB()
+    if(!data.length){
+    return sendResponse(res, {
+      data: [],
+      message: "No booking found",
+      statusCode: 404,
+      success: false,
+    });
+  }
+  sendResponse(res, {
+    data: data,
+    message: "Bookings retrieved successfully",
+    statusCode: 200,
+    success: true,
+  });
+})
+const getUserBooking=catchAsync(async(req,res)=>{
+  // retrieve userid from token
+  const userID='12232';
+  const data= await bookingServices.getUsersBookingsFromDB(userID)
+    if(!data.length){
+    return sendResponse(res, {
+      data: [],
+      message: "No booking found",
+      statusCode: 404,
+      success: false,
+    });
+  }
+  sendResponse(res, {
+    data: data,
+    message: "Bookings retrieved successfully",
+    statusCode: 200,
+    success: true,
+  });
+})
+const cancelBooking=catchAsync(async(req,res)=>{
+  const data= await bookingServices.cancelBookingsInDB(req.params.id)
+    if(!data?.isModified){
+    return sendResponse(res, {
+      data: [],
+      message: "No booking found",
+      statusCode: 404,
+      success: false,
+    });
+  }
+  sendResponse(res, {
+    data: data,
+    message: "Bookings cancelled successfully",
+    statusCode: 200,
+    success: true,
+  });
+})
+
+
 export const bookingControllers = {
   createBooking,
   checkBookingAvailability,
+  getAllBookings,
+  getUserBooking,
+  cancelBooking
 };

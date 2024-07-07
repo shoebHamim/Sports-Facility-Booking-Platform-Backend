@@ -54,7 +54,7 @@ const getAllFacility=catchAsync(async(req,res)=>{
   const data=await facilityServices.getAllFacilityFromDB()
 
   if(!data.length){
-    sendResponse(res, {
+    return sendResponse(res, {
       data: [],
       message: "No facility found",
       statusCode: 404,

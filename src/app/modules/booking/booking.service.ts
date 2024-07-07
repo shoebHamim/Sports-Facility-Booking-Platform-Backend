@@ -31,15 +31,28 @@ const createBookingIntoDB=async(bookingData:Partial<TBooking>)=>{
 }
 
 const findAllAvailableBookingsInDBForADay=async(queryDate:string)=>{
-  const allBookingsInQueryDate=await Booking.find({date:queryDate}).sort({startTime:1}).select(['startTime','endTime','-_id'] )
+  const allBookingsInQueryDate=await Booking.find({date:queryDate,isBooked:"confirmed"}).sort({startTime:1}).select(['startTime','endTime','-_id'] )
   // now calling the calculate available slot function to get all the available slots
   const availableSlots=calculateAvailableSlots(allBookingsInQueryDate)
   return availableSlots
-
 }
-
+const getAllBookingsFromDB=async()=>{
+  const allBookings=await Booking.find({}).sort({startTime:1}).populate('user')
+  return allBookings
+}
+const getUsersBookingsFromDB=async(user:string)=>{
+  const allBookings=await Booking.find({user}).sort({startTime:1}).populate('facility')
+  return allBookings
+}
+const cancelBookingsInDB=async(bookingId:string)=>{
+  const result=await Booking.findByIdAndUpdate(bookingId,{"isBooked":"canceled"})
+  return result
+}
 
 export const bookingServices={
   createBookingIntoDB,
-  findAllAvailableBookingsInDBForADay
+  findAllAvailableBookingsInDBForADay,
+  getAllBookingsFromDB,
+  getUsersBookingsFromDB,
+  cancelBookingsInDB
 }
