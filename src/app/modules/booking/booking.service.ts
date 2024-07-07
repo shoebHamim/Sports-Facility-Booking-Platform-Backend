@@ -47,6 +47,7 @@ const cancelBookingsInDB=async(bookingId:string)=>{
   return result
 }
 
+
 export const bookingServices={
   createBookingIntoDB,
   findAllAvailableBookingsInDBForADay,
