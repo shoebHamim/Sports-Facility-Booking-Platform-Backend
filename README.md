@@ -162,7 +162,7 @@ If everything is okay. It will show ```server is up and running on port 5000```.
     }
   }
 ```
-### Delete a Facility - Soft Delete (Admin Only)
+### 5.Delete a Facility - Soft Delete (Admin Only)
 - Route: `DELETE /api/facility/:id`
 - Headers:
 ```json
